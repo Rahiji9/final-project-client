@@ -8,6 +8,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const Login = () => {
  
@@ -130,11 +131,13 @@ const Login = () => {
             </form>
             <p className="text-center">
               <small>
-                New Here?<Link className="font-bold" to="/signup">Create An Account</Link>
+                New Here?<Link className="font-bold text-green-400" to="/signup">Create An Account</Link>
               </small>
             </p>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
+        
       </div>
     </>
   );

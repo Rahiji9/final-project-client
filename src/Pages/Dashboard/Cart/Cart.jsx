@@ -95,9 +95,9 @@ const Cart = () => {
                 <th>
                   <button
                     onClick={() => handleDelete(item._id)}
-                    className="btn btn-ghost btn-md bg-red-500"
+                    className="btn btn-ghost btn-md bg-orange-600"
                   >
-                    <FaTrash className="text-yellow-200"></FaTrash>
+                    <FaTrash className="text-white"></FaTrash>
                   </button>
                 </th>
               </tr>

@@ -14,6 +14,7 @@ const NavBar = () => {
   };
   const navOptions = (
     <>
+      <div className="flex items-center gap-2">
       <li>
         <Link to="/">Home</Link>
       </li>
@@ -28,6 +29,9 @@ const NavBar = () => {
         <Link to="/secret"> secret</Link>
       </li>
       <li>
+        <Link to="/contactUs"> ContactUs</Link>
+      </li>
+      <li>
         <Link to="/dashboard/cart">
           <button className="btn btn-ghost">
             <FaShoppingCart className="mr-1"></FaShoppingCart>
@@ -39,9 +43,9 @@ const NavBar = () => {
       {user ? (
         <>
           {/* <span>{user?.displayName}</span> */}
-          <button onClick={handleLogOut} className="btn btn-ghost">
+          <li onClick={handleLogOut} className="btn btn-ghost">
             LogOut
-          </button>
+          </li>
         </>
       ) : (
         <>
@@ -50,6 +54,7 @@ const NavBar = () => {
           </li>
         </>
       )}
+      </div>
     </>
   );
   return (
@@ -84,9 +89,6 @@ const NavBar = () => {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-2 items-center">{navOptions}</ul>
-        </div>
-        <div className="navbar-end">
-          <a className="btn btn-outline border-0 border-b-4 mt-4">GET STARTED</a>
         </div>
       </div>
     </div>

@@ -18,7 +18,11 @@ const Footer = () => {
             ACME Industries Ltd.
             <br />
             Providing reliable tech since 1992
+            <br />
           </p>
+        </div>
+        <div className="h-full items-center">
+          <p className="text-green-500">Created By Ali Ahmed Rahi</p>
         </div>
         <div>
           <h6 className="footer-title">Social</h6>
@@ -58,13 +62,12 @@ const Footer = () => {
             </a>
           </div>
         </div>
-        
       </div>
       <div className="footer-center p-4 bg-base-300 text-base-content">
-          <div>
-            <p>Copyright © {2024} - All right reserved by ACME Industries Ltd</p>
-          </div>
+        <div>
+          <p>Copyright © {2024} - All right reserved by ACME Industries Ltd</p>
         </div>
+      </div>
     </footer>
   );
 };

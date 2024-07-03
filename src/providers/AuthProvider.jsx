@@ -5,59 +5,82 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
+import { GoogleAuthProvider } from "firebase/auth";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
+
+//
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-// login part with firebase
+  const googleProvider = new GoogleAuthProvider();
+  const axiosPublic=useAxiosPublic()
+  // login part with firebase
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
-// signIn part with firebase
+  // signIn part with firebase
   const signIn = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
+
+  const googleSignIn = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
   //logOut part with firebase
-  const logOut =()=>{
-    setLoading(true)
-    return signOut(auth)
-  }
+  const logOut = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
 
-
-
-  const updateUserProfile=(name, photo)=>{
+  const updateUserProfile = (name, photo) => {
     return updateProfile(auth.currentUser, {
-      displayName: name, photoURL: photo
-    })
-  }
-
+      displayName: name,
+      photoURL: photo,
+    });
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log("current user", currentUser);
+      if (currentUser) {
+        //get token and store client
+        const userInfo={email:currentUser.email}
+        axiosPublic.post('/jwt',userInfo)
+        .then(res=>{
+          if(res.data.token){
+            localStorage.setItem('access-token',res.data.token)
+          }
+        })
+      } else {
+        //TODO: remove token(if token store in the clinet side:Local storage,catching,in memory)
+        localStorage.removeItem('access-token')
+      }
       setLoading(false);
     });
     return () => {
       return unsubscribe();
     };
-  }, []);
+  }, [axiosPublic]);
 
   const authInfo = {
     user,
     loading,
     createUser,
     signIn,
+    googleSignIn,
     logOut,
-    updateUserProfile
+    updateUserProfile,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
